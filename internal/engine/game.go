@@ -4,7 +4,7 @@ import "math/rand"
 
 type IGame interface {
 	Check(guess int) GuessResult
-	GenerateRandomNumber() int
+	generateRandomNumber() int
 }
 
 type GuessResult int
@@ -16,23 +16,21 @@ const (
 )
 
 type GameEngine struct {
-	MaxAttempts int
-	MysteryNum  int
+	mysteryNum int
 }
 
-func NewGame(attmepts int) *GameEngine {
+func NewGame() *GameEngine {
 	return &GameEngine{
-		MysteryNum:  generateMysteryNumber(),
-		MaxAttempts: attmepts,
+		mysteryNum: generateMysteryNumber(),
 	}
 }
 
 func (g *GameEngine) Check(guess int) GuessResult {
-	if g.MysteryNum == guess {
+	if g.mysteryNum == guess {
 		return Correct
 	}
 
-	if g.MysteryNum < guess {
+	if g.mysteryNum < guess {
 		return Low
 	}
 
