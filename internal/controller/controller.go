@@ -17,6 +17,7 @@ const (
 type Controller struct {
 	engine      engine.GameEngine
 	state       GameState
+	level       int
 	attempts    int
 	MaxAttempts int
 }
@@ -26,6 +27,7 @@ func NewController(level int) *Controller {
 		engine:      *engine.NewGame(),
 		state:       Playing,
 		attempts:    0,
+		level:       level,
 		MaxAttempts: getMaxAttempts(level),
 	}
 }
@@ -69,6 +71,17 @@ func (c *Controller) HandleGuess(input string) (string, error) {
 
 func (c *Controller) GetProgess() (int, int, GameState) {
 	return c.attempts, c.MaxAttempts, c.state
+}
+
+func (c *Controller) GetLevel() string {
+	switch c.level {
+	case 0:
+		return "Easy"
+	case 1:
+		return "Medium"
+	default:
+		return "Hard"
+	}
 }
 
 func getMaxAttempts(level int) int {

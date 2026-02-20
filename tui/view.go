@@ -23,20 +23,8 @@ Please select the difficulty level:
 
 	if m.isGameOn {
 		header = ""
-		levelstr := ""
-		attempts := 0
-		switch m.cursor {
-		case 0:
-			levelstr = "Easy"
-			attempts = 10
-		case 1:
-			levelstr = "Medium"
-			attempts = 5
-		case 2:
-			levelstr = "Hard"
-			attempts = 3
-		}
-		mainView = fmt.Sprintf("Great! You have selected the %s difficulty level.\nYou have %d chances to guess the correct number.\n\nLet's start the game!\n", levelstr, attempts)
+		mainView = fmt.Sprintf("Great! You have selected the %s difficulty level.\nYou have %d chances to guess the correct number.\n\nLet's start the game!\n", m.controller.GetLevel(), m.controller.MaxAttempts)
+
 	}
 
 	return fmt.Sprintf("%s\n%s\n%s\n", header, mainView, footer)
