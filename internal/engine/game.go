@@ -37,6 +37,10 @@ func (g *GameEngine) Check(guess int) GuessResult {
 	return High
 }
 
+func (r GuessResult) String() string {
+	return [...]string{"TOO_LOW", "TOO_HIGH", "CORRECT"}[r]
+}
+
 func generateMysteryNumber() int {
 	max, min := 101, 1
 	return rand.Intn(max-min) + min
