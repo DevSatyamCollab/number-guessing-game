@@ -3,6 +3,7 @@ package tui
 import (
 	"fmt"
 	"number-guessing-game/internal/controller"
+	"strconv"
 	"time"
 
 	"github.com/charmbracelet/bubbles/textinput"
@@ -55,22 +56,24 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.isChoiceOn = false
 					m.isGameOn = false
 					m.result = fmt.Sprintf(
-						"Congratulations! You guessed the correct number in %d attempts.\n",
-						currentAttempts,
+						"%s You guessed the correct number in %s attempts.\n",
+						m.style.CorrectRes.Render("Congratulations!"),
+						m.style.CorrectRes.Render(strconv.Itoa(currentAttempts)),
 					)
 
 				case controller.Lost:
 					m.isChoiceOn = false
 					m.isGameOn = false
 					m.result = fmt.Sprintf(
-						"Game Over! ❌ \nSorry, you've run out of attempts.\nThe secret number was %d.\n",
-						m.controller.GetSecretNum(),
+						"%s ❌ \nSorry, you've run out of attempts.\nThe secret number was %s.\n",
+						m.style.FailedRes.Render("Game Over!"),
+						m.style.CorrectRes.Render(strconv.Itoa(m.controller.GetSecretNum())),
 					)
 
 				default:
 					m.result = fmt.Sprintf(
-						"Incorrect! The number is %s than %s\n",
-						res, m.textinput.Value(),
+						"%s The number is %s %s\n",
+						m.style.FailedRes.Render("Incorrect!"), res, m.textinput.Value(),
 					)
 				}
 

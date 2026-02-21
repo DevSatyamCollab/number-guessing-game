@@ -7,6 +7,7 @@ type IGame interface {
 	generateRandomNumber() int
 }
 
+// hint
 type GuessResult int
 
 const (
@@ -26,15 +27,15 @@ func NewGame() *GameEngine {
 }
 
 func (g *GameEngine) Check(guess int) GuessResult {
-	if g.mysteryNum == guess {
-		return Correct
+	if guess > g.mysteryNum {
+		return High
 	}
 
-	if g.mysteryNum < guess {
+	if guess < g.mysteryNum {
 		return Low
 	}
 
-	return High
+	return Correct
 }
 
 func (g *GameEngine) GetMysteryNum() int {
@@ -46,6 +47,5 @@ func (r GuessResult) String() string {
 }
 
 func generateMysteryNumber() int {
-	max, min := 101, 1
-	return rand.Intn(max-min) + min
+	return rand.Intn(100) + 1
 }

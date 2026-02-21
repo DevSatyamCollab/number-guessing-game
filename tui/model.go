@@ -2,6 +2,7 @@ package tui
 
 import (
 	"number-guessing-game/internal/controller"
+	"number-guessing-game/tui/style"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -10,6 +11,7 @@ import (
 type model struct {
 	controller controller.Controller
 	textinput  textinput.Model
+	style      style.StyleBundle
 	choices    []string
 	result     string
 	cursor     int
@@ -28,6 +30,7 @@ func InitialModel() model {
 
 	return model{
 		textinput:  ti,
+		style:      style.DefaultStyle(),
 		choices:    []string{"1.Easy (10 chances)\n", "2.Medium (5 chances)\n", "3.Hard (3 chances)\n"},
 		cursor:     0,
 		isChoiceOn: true,
