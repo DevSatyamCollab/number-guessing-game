@@ -69,8 +69,8 @@ func (c *Controller) HandleGuess(input string) (string, error) {
 	return res.String(), nil
 }
 
-func (c *Controller) GetProgess() (int, int, GameState) {
-	return c.attempts, c.MaxAttempts, c.state
+func (c *Controller) GetProgess() (int, GameState) {
+	return c.attempts, c.state
 }
 
 func (c *Controller) GetLevel() string {
@@ -82,6 +82,10 @@ func (c *Controller) GetLevel() string {
 	default:
 		return "Hard"
 	}
+}
+
+func (c *Controller) GetSecretNum() int {
+	return c.engine.GetMysteryNum()
 }
 
 func getMaxAttempts(level int) int {

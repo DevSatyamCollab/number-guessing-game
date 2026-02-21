@@ -1,6 +1,11 @@
 package tui
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+
+	"github.com/charmbracelet/lipgloss"
+)
 
 func (m model) View() string {
 	header := `
@@ -9,23 +14,41 @@ I'm thinking of a number between 1 and 100.
 
 Please select the difficulty level:
 `
-	mainView := "\n"
-	footer := "\nPress q for Quit\n"
+	footer := "\nPress q for Quit . r new round\n\n"
+	var mainView strings.Builder
 
-	for i, choice := range m.choices {
-		cursor := " "
-		if m.cursor == i {
-			cursor = ">"
+	if m.isChoiceOn {
+		for i, choice := range m.choices {
+			cursor := " "
+			if m.cursor == i {
+				cursor = ">"
+			}
+
+			fmt.Fprintf(&mainView, "%s %s", cursor, choice)
 		}
-
-		mainView += fmt.Sprintf("%s %s", cursor, choice)
 	}
 
 	if m.isGameOn {
 		header = ""
-		mainView = fmt.Sprintf("Great! You have selected the %s difficulty level.\nYou have %d chances to guess the correct number.\n\nLet's start the game!\n", m.controller.GetLevel(), m.controller.MaxAttempts)
+		mainView.Reset()
+		fmt.Fprintf(
+			&mainView,
+			"Great! You have selected the %s difficulty level.\nYou have %d chances to guess the correct number.\n\nLet's start the game!\n\n",
+			m.controller.GetLevel(), m.controller.MaxAttempts)
 
+		fmt.Fprintf(
+			&mainView,
+			"%s",
+			lipgloss.JoinVertical(lipgloss.Left,
+				lipgloss.JoinHorizontal(lipgloss.Left, "Enter your choice: ", m.textinput.View()),
+				"\n"+m.result,
+			),
+		)
 	}
 
-	return fmt.Sprintf("%s\n%s\n%s\n", header, mainView, footer)
+	if !m.isChoiceOn && !m.isGameOn {
+		return "\n" + m.result + footer
+	}
+
+	return fmt.Sprintf("%s\n%s\n%s\n", header, mainView.String(), footer)
 }

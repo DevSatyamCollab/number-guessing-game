@@ -11,20 +11,25 @@ type model struct {
 	controller controller.Controller
 	textinput  textinput.Model
 	choices    []string
+	result     string
 	cursor     int
 	isGameOn   bool
+	isChoiceOn bool
 }
 
 func InitialModel() model {
 	ti := textinput.New()
 	ti.Placeholder = "15"
 	ti.Focus()
-	ti.Width = 2
+	ti.CharLimit = 2
+	ti.Prompt = ""
+	ti.Width = 5
 
 	return model{
-		textinput: ti,
-		choices:   []string{"1.Easy (10 chances)\n", "2.Medium (5 chances)\n", "3.Hard (3 chances)\n"},
-		cursor:    0,
+		textinput:  ti,
+		choices:    []string{"1.Easy (10 chances)\n", "2.Medium (5 chances)\n", "3.Hard (3 chances)\n"},
+		cursor:     0,
+		isChoiceOn: true,
 	}
 }
 
