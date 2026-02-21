@@ -1,6 +1,8 @@
 # 🎯 Gopher Guess
 
 A minimalist, high-efficiency terminal-based number guessing game. Designed for those who want a quick mental challenge without leaving their keyboard-centric workflow.
+> [!NOTE]  
+> This is a sample solution for the [number-guessing-game](https://roadmap.sh/projects/number-guessing-game) challenge from [roadmap.sh](https://roadmap.sh/).
 
 Built with **Go** and the **Bubble Tea** (Charm.sh) framework.
 
