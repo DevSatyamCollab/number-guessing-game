@@ -22,6 +22,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.cursor > 0 {
 				m.cursor--
 			}
+		case "r":
+			m.cursor = 0
+			m.isGameOn = false
+			m.isChoiceOn = true
+			m.result = ""
 		case "enter":
 			if !m.isGameOn {
 				m.isGameOn = true
@@ -32,8 +37,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.isGameOn {
 				res, err := m.controller.HandleGuess(m.textinput.Value())
 				if err != nil {
+					m.textinput.SetValue("")
+					m.textinput.Focus()
 					m.result = err.Error() + "\n"
-					return m, nil
+					return m, textinput.Blink
 				}
 
 				currentAttempts, state := m.controller.GetProgess()
@@ -48,7 +55,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 						currentAttempts,
 					)
 
-					return m, tea.Quit
 				case controller.Lost:
 					m.isChoiceOn = false
 					m.isGameOn = false
@@ -57,7 +63,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 						m.controller.GetSecretNum(),
 					)
 
-					return m, tea.Quit
 				default:
 					m.result = fmt.Sprintf(
 						"Incorrect! The number is %s than %s\n",

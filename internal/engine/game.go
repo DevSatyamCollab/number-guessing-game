@@ -42,7 +42,7 @@ func (g *GameEngine) GetMysteryNum() int {
 }
 
 func (r GuessResult) String() string {
-	return [...]string{"TOO_LOW", "TOO_HIGH", "CORRECT"}[r]
+	return [...]string{"less than", "greater than", "correct"}[r]
 }
 
 func generateMysteryNumber() int {
