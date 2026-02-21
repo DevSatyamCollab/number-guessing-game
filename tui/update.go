@@ -3,6 +3,7 @@ package tui
 import (
 	"fmt"
 	"number-guessing-game/internal/controller"
+	"time"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -13,7 +14,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "q":
-			return m, tea.Quit
+			m.quit = true
+			return m, tea.Tick(time.Second*1, func(t time.Time) tea.Msg {
+				return tea.Quit()
+			})
 		case "down", "j": // down
 			if m.cursor < len(m.choices)-1 {
 				m.cursor++

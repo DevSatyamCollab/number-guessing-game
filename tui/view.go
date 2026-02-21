@@ -50,5 +50,9 @@ Please select the difficulty level:
 		return "\n" + m.result + footer
 	}
 
+	if m.quit {
+		return "\nThanks for playing! See you next time.\n\n"
+	}
+
 	return fmt.Sprintf("%s\n%s\n%s\n", header, mainView.String(), footer)
 }

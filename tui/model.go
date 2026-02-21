@@ -15,6 +15,7 @@ type model struct {
 	cursor     int
 	isGameOn   bool
 	isChoiceOn bool
+	quit       bool
 }
 
 func InitialModel() model {
