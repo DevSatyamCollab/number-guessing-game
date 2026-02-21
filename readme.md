@@ -40,6 +40,7 @@ Built with **Go** and the **Bubble Tea** (Charm.sh) framework.
 
    ```bash
    git clone https://github.com/DevSatyamCollab/number-guessing-game.git
+   cd number-guessing-game
    ```
 
 2. Build the binary
